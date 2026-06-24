@@ -6,6 +6,13 @@ spring:
     properties:
       hibernate:
         format_sql: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+event:
+  kafka:
+    enabled: false
 
 logging:
   level:
