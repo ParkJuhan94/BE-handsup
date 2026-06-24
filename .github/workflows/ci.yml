@@ -46,7 +46,7 @@ jobs:
     steps:
       # 1. 체크아웃
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # 2. 시간 설정
       - name: Check the timezone
@@ -54,7 +54,7 @@ jobs:
 
       # 3. 자바 버전 설정
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -77,7 +77,7 @@ jobs:
       # 6. 빌드 시 의존성 캐싱
       - name: Caching gradle
         if: always()
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -99,7 +99,7 @@ jobs:
 
       # 9. 테스트 실패시 코드 라인에 대한 체크 추가
       - name: If test fail, add check comment on failed code line
-        uses: mikepenz/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v5
         if: always()
         with:
           report_paths: '**/build/test-results/test/TEST-*.html'
