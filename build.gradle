@@ -22,6 +22,15 @@ subprojects {
     apply { plugin('io.spring.dependency-management') }
     apply { plugin('java-test-fixtures') }
 
+    dependencyManagement {
+        imports {
+            // Spring Boot 3.2.0 BOM이 관리하는 testcontainers(1.19.3)가
+            // jdbc/database-commons 등 명시하지 않은 서브모듈에 그대로 적용되어
+            // testcontainers:testcontainers(1.21.4)와 버전이 뒤섞이는 문제 방지
+            mavenBom "org.testcontainers:testcontainers-bom:1.21.4"
+        }
+    }
+
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
