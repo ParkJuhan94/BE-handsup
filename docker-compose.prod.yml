@@ -6,7 +6,7 @@ services:
       - "6380:6379"
     volumes:
       - redis_data:/data
-    restart: always
+    restart: unless-stopped
     command: [ "redis-server", "--requirepass", "${REDIS_HOST_PASSWORD}" ]
 
   mysql:
@@ -19,7 +19,7 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 30s
@@ -51,7 +51,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
-    restart: always
+    restart: unless-stopped
     depends_on:
       - redis
       - mysql
