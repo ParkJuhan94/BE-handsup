@@ -12,6 +12,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import dev.handsup.common.exception.ValidationException;
@@ -20,6 +22,7 @@ import dev.handsup.common.exception.ValidationException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE) // 트랜잭션 어드바이스보다 항상 바깥에서 실행되도록 보장
 public class DistributeLockAop {
 
     private static final String REDISSON_KEY_PREFIX = "RLOCK_";

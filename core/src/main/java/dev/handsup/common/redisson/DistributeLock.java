@@ -16,5 +16,5 @@ public @interface DistributeLock {
 
 	long waitTime() default 5L; // 대기 시간
 
-	long leaseTime() default 3L; // 임대 시간
+	long leaseTime() default 10L; // 임대 시간 (waitTime보다 커야 처리 중 락 조기 만료를 방지)
 }

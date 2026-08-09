@@ -39,7 +39,9 @@ public class BiddingService {
     private final FCMService fcmService;
     private final ApplicationEventPublisher eventPublisher;
 
-    @Transactional
+    // 트랜잭션은 DistributeLockAop -> AopForTransaction(REQUIRES_NEW)이 전담한다.
+    // 여기에 @Transactional을 함께 붙이면 이중 트랜잭션(커넥션 2개)이 걸려
+    // 부하 상황에서 락을 쥔 스레드가 커넥션 대기로 지연되고 leaseTime 만료로 이어진다.
     @DistributeLock(key = "'auction_' + #auctionId") // auctionId 값을 추출하여 락 키로 사용
     public BiddingResponse registerBidding(RegisterBiddingRequest request, Long auctionId, User bidder) {
         Auction auction = auctionService.getAuctionById(auctionId);
